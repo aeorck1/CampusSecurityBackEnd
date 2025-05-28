@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+djangorestframework = "*"
+drf-spectacular = "*"
+django-cors-headers = "*"
+pyjwt = "*"
+django = "*"
+gunicorn = "*"
+pillow = "*"
+dotenv = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.1"
