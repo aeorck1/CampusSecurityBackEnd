@@ -2,7 +2,7 @@ from django.db.models import ExpressionWrapper, F, DurationField, Avg
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiParameter
 from rest_framework import viewsets, permissions, mixins, generics
 from rest_framework.exceptions import PermissionDenied, ValidationError
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -57,7 +57,7 @@ class IncidentAdminViewSet(viewsets.ModelViewSet):
 @extend_schema_view(
     get=extend_schema(summary="List incidents (public)", tags=['Incident']),
 )
-class IncidentPublicRetrieveViewSet(RetrieveAPIView):
+class IncidentPublicRetrieveViewSet(ListAPIView):
     queryset = Incident.objects.all()
     serializer_class = IncidentSerializer
     permission_classes = [permissions.AllowAny]
@@ -98,7 +98,7 @@ class IncidentStatisticsView(APIView):
         response_times = Incident.objects.filter(
             status='RESOLVED',
             date_resolved__isnull=False,
-            created_at__isnull=False  # assuming AModelAuditMixinNullableCreate has created_at
+            date_created__isnull=False
         ).annotate(
             response_duration=ExpressionWrapper(
                 F('date_resolved') - F('date_created'),

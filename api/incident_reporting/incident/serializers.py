@@ -1,5 +1,7 @@
 from django.utils import timezone
 from rest_framework import serializers
+
+from appdata.model_util import jsonify_user
 from appdata.models import Incident
 from appdata.models import IncidentCategory
 from appdata.models.incident import IncidentStatus
@@ -30,9 +32,12 @@ class IncidentStatusUpdateSerializer(serializers.ModelSerializer):
         fields = ['status']
 
 
-    def update(self, instance, validated_data):
-        if validated_data['status'] == IncidentStatus.RESOLVED.name:
-            validated_data['date_resolved'] = timezone.now()
+    def validate(self, attrs):
+        attrs['last_modified_by_user'] = jsonify_user(self.context['request'].user)
+        if attrs['status'] == IncidentStatus.RESOLVED.name:
+            attrs['date_resolved'] = timezone.now()
+        return attrs
+
 
 
 class IncidentStatisticsSerializer(serializers.Serializer):

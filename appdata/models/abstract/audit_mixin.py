@@ -79,3 +79,16 @@ class AModelAuditMixinNullableCreate(AModelAuditMixin):
 
     class Meta:
         abstract = True
+
+
+    def save(self, *args, force_insert=False, force_update=False, using=None, update_fields=None):
+
+        if self._state.adding:  # New instance
+            pass
+        else:
+            if self.last_modified_by_user is None:
+                context_user_json = jsonify_user(get_context_user())
+                self.last_modified_by_user = context_user_json
+
+        super().save(*args, force_insert=force_insert, force_update=force_update, using=using,
+                     update_fields=update_fields)
