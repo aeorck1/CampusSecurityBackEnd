@@ -66,7 +66,7 @@ class PasswordResetRequestView(APIView):
             "email": user.email
         }
 
-        token = jwt_encode(payload, timezone.now() + timedelta(minutes=30))
+        token = jwt_encode(payload)
 
         # Build reset link
         reset_link = f"{settings.PASSWORD_RESET_URL}?token={token}"
