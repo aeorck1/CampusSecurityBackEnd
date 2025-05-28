@@ -187,7 +187,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1",
     "http://localhost:5500",
     "http://localhost:5173",
-    "https://campus-security-api.onrender.com"
+    "https://campussecurityapi.onrender.com",
+    "https://campussecuritybackend.onrender.com",
 ]
 #################################### End of CORS Settings ####################################
 
@@ -206,3 +207,18 @@ USER_ACCOUNT_FILES_DIR_ROOT = 'account/'
 SYSTEM_FILES_DIR_ROOT = 'system/'
 #################################### End of URL and Asset Directory Configuration ####################################
 
+
+#################################### Email Settings ####################################
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = EnvironmentVariables.EMAIL_HOST
+EMAIL_USE_TLS = EnvironmentVariables.EMAIL_USE_TLS
+EMAIL_PORT = EnvironmentVariables.EMAIL_PORT
+EMAIL_HOST_USER = EnvironmentVariables.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EnvironmentVariables.EMAIL_HOST_PASSWORD
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_DISPLAY_NAME = 'Campus Security Application'
+EMAIL_SENDER = f'{EMAIL_DISPLAY_NAME} <{EMAIL_HOST_USER}>'
+#################################### End of Email Setting ####################################
+
+
+PASSWORD_RESET_URL = EnvironmentVariables.PASSWORD_RESET_URL

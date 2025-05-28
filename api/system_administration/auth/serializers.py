@@ -44,3 +44,12 @@ class TokenValidationSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return AuthenticationService.verify_token(token=validated_data['token'])
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class PasswordResetCompleteSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    new_password = serializers.CharField(min_length=8)

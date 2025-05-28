@@ -11,6 +11,8 @@ class EnvironmentVariables:
 
     APP_SERVER_URL: str = os.environ.get('APP_SERVER_URL', 'http://localhost:5173')
 
+    PASSWORD_RESET_URL = f'{APP_SERVER_URL}/{os.getenv("PASSWORD_RESET_URL", "reset-password")}'
+
     DEBUG: bool = os.environ.get('DEBUG', 'False') == 'True'
 
     PRODUCTION: bool = os.environ.get('PRODUCTION', 'False') == 'True'
@@ -64,4 +66,3 @@ class EnvironmentVariables:
     JWT_ACCESS_TOKEN_LIFETIME: int = int(os.environ.get('JWT_ACCESS_TOKEN_LIFETIME', 1)) # In hours (1 hr)
 
     JWT_REFRESH_TOKEN_LIFETIME: int = int(os.environ.get('JWT_REFRESH_TOKEN_LIFETIME', 168)) # In hours (7 days)
-

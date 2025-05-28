@@ -10,7 +10,7 @@ class UserService:
     model = get_user_model()
 
     @classmethod
-    def get_user_by_email_or_username(cls, email_or_username: str, raise_exception=True) -> AbstractBaseUser | None:
+    def get_user_by_email_or_username(cls, email_or_username: str, raise_exception=True) -> model | None:
         try:
             return cls.model.objects.get(Q(username=email_or_username) | Q(email=email_or_username))
         except cls.model.DoesNotExist:

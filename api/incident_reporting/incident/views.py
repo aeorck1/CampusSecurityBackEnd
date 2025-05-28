@@ -2,7 +2,7 @@ from django.db.models import ExpressionWrapper, F, DurationField, Avg
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiParameter
 from rest_framework import viewsets, permissions, mixins, generics
 from rest_framework.exceptions import PermissionDenied, ValidationError
-from rest_framework.permissions import IsAdminUser
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -51,6 +51,16 @@ class IncidentAdminViewSet(viewsets.ModelViewSet):
     queryset = Incident.objects.all()
     serializer_class = IncidentSerializer
     permission_classes = [permissions.IsAdminUser]
+    http_method_names = ('get', 'put', 'patch', 'delete')
+
+
+@extend_schema_view(
+    get=extend_schema(summary="List incidents (public)", tags=['Incident']),
+)
+class IncidentPublicRetrieveViewSet(RetrieveAPIView):
+    queryset = Incident.objects.all()
+    serializer_class = IncidentSerializer
+    permission_classes = [permissions.AllowAny]
 
 # Update status
 @extend_schema_view(
@@ -72,10 +82,11 @@ class IncidentStatusUpdateViewSet(mixins.UpdateModelMixin, viewsets.GenericViewS
 @extend_schema(
     summary="Incident Statistics",
     description="Returns incident statistics including total counts, average response time, and average satisfaction.",
-    tags=['Incident']
+    tags=['Incident'],
+    responses={200: IncidentStatisticsSerializer}
 )
 class IncidentStatisticsView(APIView):
-    permission_classes = [IsAdminUser]  # Optional: change to AllowAny if needed
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         total_incidents = Incident.objects.count()
