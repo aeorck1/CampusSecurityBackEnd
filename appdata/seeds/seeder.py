@@ -10,7 +10,7 @@ class Seeder:
 
     @classmethod
     def _get_created_by_user(cls, apps):
-        User = apps.get_model("appdata", "User")
+        # User = apps.get_model("appdata", "User")
 
         return jsonify_user(User.objects.get(pk=cls.system_user_id))
 
