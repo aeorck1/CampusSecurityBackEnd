@@ -5,3 +5,5 @@ venv
 Pipfile.lock
 .env
 .idea
+campusBE
+.campusBE
