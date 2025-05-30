@@ -57,11 +57,11 @@ class Seeder:
 
     @classmethod
     def insert_default003_incident_category(cls, apps, schema_editor):
-        IncidentCategory = apps.get_model("appdata", "IncidentCategory")
+        IncidentTag = apps.get_model("appdata", "IncidentTag")
 
         created_by = cls._get_created_by_user(apps)
 
-        categories = [
+        tags = [
             {
                 "id": "property_damage",
                 "name": "Property Damage",
@@ -109,5 +109,5 @@ class Seeder:
             },
         ]
 
-        for data in categories:
-            IncidentCategory.objects.create(**data)
+        for data in tags:
+            IncidentTag.objects.create(**data)

@@ -6,9 +6,12 @@ from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from api.chat.comment.serializers import CommentListSerializer
+from api.chat.comment.services import CommentService
 from api.incident_reporting.incident.serializers import IncidentCreateSerializer, IncidentSerializer, \
     IncidentStatusUpdateSerializer, IncidentStatisticsSerializer, IncidentSatisfactionSerializer
 from appdata.models.incident import Incident
+from core.constants.system_enums import ObjectType
 
 
 # Custom permission
@@ -175,3 +178,19 @@ class UserIncidentsListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Incident.objects.filter(created_by_user=self.request.user)
+
+
+@extend_schema_view(
+    get=extend_schema(summary='Retrieve all comments (chats) on an incident report (Public).',
+                      description='Retrieve all comments (chats) on an incident (Public).',
+                      tags=['Incident'])
+)
+class PublicCommentListAPIView(ListAPIView):
+    serializer_class = CommentListSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def get_queryset(self):
+        return CommentService.get_object_comments(
+            object_type=ObjectType.INCIDENT.name,
+            object_id=self.kwargs['id']
+        )

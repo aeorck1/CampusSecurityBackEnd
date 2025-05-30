@@ -41,6 +41,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     middle_name = models.CharField(max_length=64)
 
+    department = models.CharField(max_length=128)
+
+    bio = models.TextField()
+
     role = models.ForeignKey(to="Role",
                              verbose_name=_('role'),
                              blank=True,

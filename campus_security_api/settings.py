@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "appdata",
     "api.system_administration",
     "api.incident_reporting",
+    "api.chat"
 ]
 
 MIDDLEWARE = [

@@ -50,3 +50,9 @@ class StudentRegistrationSerializer(serializers.ModelSerializer):
 
         validated_data['role'] = student_role
         return User.objects.create_user(**validated_data)
+
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'middle_name', 'department', 'bio', 'profile_picture']

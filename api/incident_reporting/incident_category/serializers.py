@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from appdata.models import IncidentCategory
+from appdata.models import IncidentTag
 
 
-class IncidentCategorySerializer(serializers.ModelSerializer):
+class IncidentTagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = IncidentCategory
+        model = IncidentTag
         fields = '__all__'
